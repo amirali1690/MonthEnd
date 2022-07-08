@@ -27,10 +27,10 @@ def lambda_handler(event, context):
     client = boto3.client('sqs',region_name='us-west-2',
     endpoint_url='https://sqs.us-west-2.amazonaws.com')
     queueInfo = client.get_queue_url(QueueName='MonthEnd')
-    for clinic in result:
+    for clinicInfo in result.items():
         client.send_message(
                             QueueUrl = queueInfo['QueueUrl'],
-                            MessageBody=result[clinic]
+                            MessageBody=clinicInfo
                         )
 
     print(result)
