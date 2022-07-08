@@ -9,6 +9,7 @@ jobs:
                 name : install dependencies
                 command: |
                     pip install pymysql
+                    pip install fpdf
             - run : 
                 name: install linting libraries
                 command: |
