@@ -18,6 +18,7 @@ jobs:
                 name: lint python codes
                 command: |
                     pylint --variable-naming-style camelCase GetDataPackage/lambda_function.py
+                    pylint --variable-naming-style camelCase GetDataPackage/get_data.py
             - run: 
                 name: lint cloudformation template
                 command: |
