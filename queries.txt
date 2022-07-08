@@ -1,0 +1,119 @@
+#### Current Billed Amount ####
+
+SELECT SUM(P.charged) 
+FROM payments P
+LEFT JOIN appointments A ON A.id=P.appointmentID
+LEFT JOIN customers CU ON CU.id=A.customerID
+LEFT JOIN clinics CL ON CL.id=CU.clinicID
+LEFT JOIN casetypes CT ON CT.id=CU.casetypeID
+LEFT JOIN providers PR ON PR.id=P.providerID
+WHERE P.tranSubType='SV' AND P.transactionDate>='2022-05-01' AND P.transactionDate<'2022-06-01' AND CL.name='Chandler' AND PR.name NOT LIKE '%cryo t%' AND CT.name NOT LIKE '%cryo%' AND P.tranSubType<>'OT'
+
+#### Insurance Billed Amount ####
+
+SELECT SUM(P.charged) 
+FROM payments P
+LEFT JOIN appointments A ON A.id=P.appointmentID
+LEFT JOIN customers CU ON CU.id=A.customerID
+LEFT JOIN clinics CL ON CL.id=CU.clinicID
+LEFT JOIN casetypes CT ON CT.id=CU.casetypeID
+LEFT JOIN providers PR ON PR.id=P.providerID
+WHERE P.tranSubType='SV' AND P.transactionDate>='2022-05-01' AND P.transactionDate<'2022-06-01' AND CL.name='Chandler' AND PR.name NOT LIKE '%cryo t%' AND CT.name NOT LIKE '%cryo%' AND P.tranSubType<>'OT' AND CT.name NOT LIKE '%PI%' AND CT.name NOT LIKE '%WC%' 
+
+
+#### PI Billed Amount ####
+
+SELECT SUM(P.charged) 
+FROM payments P
+LEFT JOIN appointments A ON A.id=P.appointmentID
+LEFT JOIN customers CU ON CU.id=A.customerID
+LEFT JOIN clinics CL ON CL.id=CU.clinicID
+LEFT JOIN casetypes CT ON CT.id=CU.casetypeID
+LEFT JOIN providers PR ON PR.id=P.providerID
+WHERE P.tranSubType='SV' AND P.transactionDate>='2022-05-01' AND P.transactionDate<'2022-06-01' AND CL.name='Chandler' AND PR.name NOT LIKE '%cryo t%' AND CT.name NOT LIKE '%cryo%' AND P.tranSubType<>'OT' AND ( CT.name LIKE '%PI%' OR CT.name LIKE '%WC%' )
+
+
+#### Insurance Collections #### Copay/Coins/Ded must be added
+
+SELECT SUM(P.charged) 
+FROM payments P
+LEFT JOIN appointments A ON A.id=P.appointmentID
+LEFT JOIN customers CU ON CU.id=A.customerID
+LEFT JOIN clinics CL ON CL.id=CU.clinicID
+LEFT JOIN casetypes CT ON CT.id=CU.casetypeID
+LEFT JOIN providers PR ON PR.id=P.providerID
+WHERE P.tranSubType='IN' AND P.transactionDate>='2022-05-01' AND P.transactionDate<'2022-06-01' AND CL.name='Chandler' AND PR.name NOT LIKE '%cryo t%' AND CT.name NOT LIKE '%cryo%' AND P.tranSubType<>'OT' AND ( CT.name NOT LIKE '%PI%' AND CT.name NOT LIKE '%WC%' )
+
+#### PI/WC collections ####
+SELECT SUM(P.charged) 
+FROM payments P
+LEFT JOIN appointments A ON A.id=P.appointmentID
+LEFT JOIN customers CU ON CU.id=A.customerID
+LEFT JOIN clinics CL ON CL.id=CU.clinicID
+LEFT JOIN casetypes CT ON CT.id=CU.casetypeID
+LEFT JOIN providers PR ON PR.id=P.providerID
+WHERE P.tranType='P' AND P.transactionDate>='2022-05-01' AND P.transactionDate<'2022-06-01' AND CL.name='Chandler' AND PR.name NOT LIKE '%cryo t%' AND CT.name NOT LIKE '%cryo%' AND P.tranSubType<>'OT' AND ( CT.name LIKE '%PI%' OR CT.name LIKE '%WC%' )
+
+
+### OTC Collections ###
+
+SELECT SUM(P.charged)
+FROM payments P
+LEFT JOIN appointments A ON A.id=P.appointmentID
+LEFT JOIN customers CU ON CU.id=A.customerID
+LEFT JOIN clinics CL ON CL.id=CU.clinicID
+LEFT JOIN casetypes CT ON CT.id=CU.casetypeID
+LEFT JOIN providers PR ON PR.id=P.providerID
+WHERE P.tranType='P' AND P.tranSubType IN ('CC','CK','CS','DD') AND P.transactionDate>='2022-05-01' AND P.transactionDate<'2022-06-01' AND CL.name='Chandler' AND PR.name NOT LIKE '%cryo t%' AND CT.name NOT LIKE '%cryo%' AND P.tranSubType<>'OT' AND ( CT.name NOT LIKE '%PI%' AND CT.name NOT LIKE '%WC%')
+
+
+#### Copay/Coins/Ded ###
+
+SELECT SUM(P.charged)
+FROM ayments P
+LEFT JOIN appointments A ON A.id = P.appointmentID
+LEFT JOIN customers CU ON CU.id = A.customerID
+LEFT JOIN clinics CL ON CL.id = CU.clinicID
+LEFT JOIN casetypes CT ON CT.id = CU.casetypeID
+LEFT JOIN providers PR ON PR.id = P.providerID
+WHERE P.tranType = 'P' AND P.tranSubType <> 'IN' AND P.transactionDate >= '2022-05-01' AND P.transactionDate < '2022-06-01' AND CL.name = 'Chandler' AND CT.name NOT LIKE '%cryo%' AND CT.name NOT LIKE '%denied care%' AND CT.name NOT IN('Weight Loss','DO NOT USE','Wellness','Weight Loss Cas') AND CT.name NOT LIKE '%cash%' AND CT.name NOT LIKE '%vip%' AND CT.name NOT LIKE '%massage%'
+    
+
+### Chiro Charges ###
+
+SELECT SUM(P.charged)
+FROM payments P
+LEFT JOIN appointments A ON A.id = P.appointmentID
+LEFT JOIN customers CU ON CU.id = A.customerID
+LEFT JOIN clinics CL ON CL.id = CU.clinicID
+LEFT JOIN casetypes CT ON CT.id = CU.casetypeID
+LEFT JOIN providers PR ON PR.id = P.providerID
+WHERE P.tranSubType ='SV' AND P.transactionDate >= '2022-05-01' AND P.transactionDate < '2022-06-01' AND CL.name = 'Chandler' AND PR.Specialty='Chiro'
+    
+
+### MD Charges ###
+
+SELECT SUM(P.charged)
+FROM payments P
+LEFT JOIN appointments A ON A.id = P.appointmentID
+LEFT JOIN customers CU ON CU.id = A.customerID
+LEFT JOIN clinics CL ON CL.id = CU.clinicID
+LEFT JOIN casetypes CT ON CT.id = CU.casetypeID
+LEFT JOIN providers PR ON PR.id = P.providerID
+WHERE P.tranSubType ='SV' AND P.transactionDate >= '2022-05-01' AND P.transactionDate < '2022-06-01' AND CL.name = 'Chandler' AND PR.Specialty='MD'
+    
+
+### PT Charges ###
+
+SELECT SUM(P.charged)
+FROM payments P
+LEFT JOIN appointments A ON A.id = P.appointmentID
+LEFT JOIN customers CU ON CU.id = A.customerID
+LEFT JOIN clinics CL ON CL.id = CU.clinicID
+LEFT JOIN casetypes CT ON CT.id = CU.casetypeID
+LEFT JOIN providers PR ON PR.id = P.providerID
+WHERE P.tranSubType ='SV' AND P.transactionDate >= '2022-05-01' AND P.transactionDate < '2022-06-01' AND CL.name = 'Chandler' AND PR.Specialty='PT'
+    
+
+
+
