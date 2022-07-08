@@ -81,7 +81,7 @@ jobs:
                 command: |
                     S3KEYTOSQSENV=LambdaPackageGetData-${CIRCLE_WORKFLOW_ID}.zip
                     aws cloudformation deploy --template-file CreateMonthEndReport.json \
-                     --stack-name PIBalanceUpdate --capabilities CAPABILITY_NAMED_IAM \
+                     --stack-name CreateMonthEnd --capabilities CAPABILITY_NAMED_IAM \
                      --parameter-overrides RDSHOST=${RDS_HOST} RDSDB=${RDS_DB} \
                      RDSUSER=${RDS_USER} RDSPASSWORD=${RDS_PASSWORD} \
                      S3KEYMONTHEND=$S3KEYTOSQSENV
