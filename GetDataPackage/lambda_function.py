@@ -33,7 +33,7 @@ def lambda_handler(event, context):
     clinicList=['Chandler','Gilbert','Tempe','Ocotillo','Desert Ridge',
                 'Queen Creek','Goodyear','Phoenix','Mesa']
     today=datetime.now().date()
-    thisMonth=datetime(today.year,today.month,1).date()
+    thisMonth=datetime(today.year,today.month-1,1).date()
     lastMonth = month_before(thisMonth)
     lastMonthMonth=lastMonth.month
     monthBeforeLastMonth = month_before(lastMonth)
@@ -51,7 +51,7 @@ def lambda_handler(event, context):
                                 port = 3306,
                                 cursorclass= pymysql.cursors.DictCursor)
     cursor=connection.cursor()
-
+    
     
     #### Get Total Billed for the last two months
     sql =   "SELECT SUM(P.charged) AS CurrentBilled,CL.name AS clinic,MONTH(P.transactionDate) AS month "\
@@ -272,6 +272,16 @@ def lambda_handler(event, context):
             result[info['clinic']]={'billed':{'total':{},'insurance':{},'pi':{}},'collection':{'insurance':'','pi':'','copay/coins/ded':'','otc':''},'specialty':{'chiro':'','md':'','pt':''}} 
         result[info['clinic']]['specialty']['md']=str(info['mdCharges'])
 
+
+
+    client = boto3.client('sqs',region_name='us-west-2',
+    endpoint_url='https://sqs.us-west-2.amazonaws.com')
+    queueInfo = client.get_queue_url(QueueName='MonthEnd')
+    for clinic in result.keys():
+        client.send_message(
+                            QueueUrl = queueInfo['QueueUrl'],
+                            MessageBody=result[clinic]
+                        )
 
     print(result)
     return True
