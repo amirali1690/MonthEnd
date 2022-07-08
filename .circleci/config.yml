@@ -17,12 +17,11 @@ jobs:
             - run : 
                 name: lint python codes
                 command: |
-                    pylint --variable-naming-style camelCase LambdaPackageGetCurrentPI/lambda_function.py
-                    pylint --variable-naming-style camelCase LambdaPackageUpdateCurrentPI/lambda_function.py
+                    pylint --variable-naming-style camelCase GetDataPacakge/lambda_function.py
             - run: 
                 name: lint cloudformation template
                 command: |
-                    cfn-lint SQS-LambdaStack.json
+                    cfn-lint CreateMonthEndReport.json
     zipPythonPackages:
         docker:
             - image: cimg/base:stable-20.04
@@ -42,13 +41,10 @@ jobs:
                 command: |
                     mkdir zip
                     ls -l
-                    cd LambdaPackageUpdateCurrentPI
-                    zip -r LambdaPackageUpdateCurrentPI-${CIRCLE_WORKFLOW_ID}.zip .
-                    cd ../LambdaPackageGetCurrentPI
-                    zip -r LambdaPackageGetCurrentPI-${CIRCLE_WORKFLOW_ID}.zip .
+                    cd GetDataPacakge
+                    zip -r GetDataPacakge-${CIRCLE_WORKFLOW_ID}.zip .
                     cd ..
-                    cp LambdaPackageUpdateCurrentPI/LambdaPackageUpdateCurrentPI-${CIRCLE_WORKFLOW_ID}.zip ./zip
-                    cp LambdaPackageGetCurrentPI/LambdaPackageGetCurrentPI-${CIRCLE_WORKFLOW_ID}.zip ./zip
+                    cp GetDataPacakge/GetDataPacakge-${CIRCLE_WORKFLOW_ID}.zip ./zip
             - save_cache:
                 key: ubuntu-cache
                 paths: [zip]
@@ -69,8 +65,7 @@ jobs:
             - run:
                 name: upload zip files to s3
                 command: |
-                    aws s3 cp .circleci/python_packages/LambdaPackageGetCurrentPI-${CIRCLE_WORKFLOW_ID}.zip s3://generalfilesbackfit
-                    aws s3 cp .circleci/python_packages/LambdaPackageUpdateCurrentPI-${CIRCLE_WORKFLOW_ID}.zip s3://generalfilesbackfit
+                    aws s3 cp .circleci/python_packages/GetDataPacakge-${CIRCLE_WORKFLOW_ID}.zip s3://generalfilesbackfit
     createOrUpdateStack:
         docker:
             - image: amazon/aws-cli
@@ -83,19 +78,12 @@ jobs:
             - run:
                 name: update stack
                 command: |
-                    S3KEYTOSQSENV=LambdaPackageGetCurrentPI-${CIRCLE_WORKFLOW_ID}.zip
-                    S3KEYFROMSQSENV=LambdaPackageUpdateCurrentPI-${CIRCLE_WORKFLOW_ID}.zip
-                    aws cloudformation deploy --template-file SQS-LambdaStack.json \
+                    S3KEYTOSQSENV=GetDataPacakge-${CIRCLE_WORKFLOW_ID}.zip
+                    aws cloudformation deploy --template-file CreateMonthEndReport.json \
                      --stack-name PIBalanceUpdate --capabilities CAPABILITY_NAMED_IAM \
                      --parameter-overrides RDSHOST=${RDS_HOST} RDSDB=${RDS_DB} \
                      RDSUSER=${RDS_USER} RDSPASSWORD=${RDS_PASSWORD} \
-                     S3KEYTOSQS=$S3KEYTOSQSENV \
-                     S3KEYFROMSQS=$S3KEYFROMSQSENV \
-                     VPCID=${VPC_ID}
-
-
-
-
+                     S3KEYTOSQS=$S3KEYTOSQSENV
 workflows: 
     launchPiCaseBalanceUpdate: 
         jobs: 

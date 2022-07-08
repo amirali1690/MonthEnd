@@ -94,7 +94,6 @@
                 "RoleName" : "LambdaExecRole"
             }
         },
-        
         "GetMonthEndDataPublishshtoSQS" : {
             "Type" : "AWS::Lambda::Function",
             "Properties" : {
