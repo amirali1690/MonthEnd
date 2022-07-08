@@ -45,7 +45,7 @@ jobs:
                     cd GetDataPackage
                     zip -r GetDataPackage-${CIRCLE_WORKFLOW_ID}.zip .
                     cd ..
-                    cp GetDataPacakge/GetDataPackage-${CIRCLE_WORKFLOW_ID}.zip ./zip
+                    cp GetDataPackage/GetDataPackage-${CIRCLE_WORKFLOW_ID}.zip ./zip
             - save_cache:
                 key: ubuntu-cache
                 paths: [zip]
