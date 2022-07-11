@@ -103,10 +103,11 @@
                                 {
                                     "Effect" : "Allow",
                                     "Action" : [
-                                        "s3:PutObject"
+                                        "s3:PutObject",
+                                        "s3:GetObject"
                                     ],
                                     "Resource": [
-                                        "arn:aws:s3:::monthly-report-bfh" 
+                                        "arn:aws:s3:::monthly-report-bfh/*" 
                                     ]
                                 }
                             ]
