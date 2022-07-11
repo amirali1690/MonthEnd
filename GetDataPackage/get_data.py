@@ -341,7 +341,7 @@ def get_md_charges(result):
 
 def create_month_end():
     '''collect all stats required'''
-    result={}
+    result={'month':lastMonth.strftime('%Y-%B')}
     result=get_current_billed(result)
     result=get_insurance_billed(result)
     result=get_pi_billed(result)
