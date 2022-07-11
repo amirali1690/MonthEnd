@@ -174,10 +174,10 @@ def get_pi_collection(result):
            "LEFT JOIN casetypes CT ON CT.id=CU.casetypeID "\
            "LEFT JOIN providers PR ON PR.id=P.providerID "\
            "WHERE P.tranType='P' AND P.transactionDate>=%s AND  "\
-           "P.transactionDate<%s AND P.tranSubType='IN' "\
+           "P.transactionDate<%s AND P.tranSubType='IN' AND"\
            "CT.name NOT LIKE '%%cryo%%' AND P.tranSubType<>'OT' AND "\
-           "(CT.name LIKE '%%PI%%' OR CT.name LIKE '%%WC%%' ) "\
-          "GROUP BY CL.name "
+           "(CT.name LIKE '%%PI%%' OR CT.name LIKE '%%WC%%') "\
+           "GROUP BY CL.name "
 
     cursor.execute(sql,(date_to_string(lastMonth),date_to_string(thisMonth)))
     piCollection = cursor.fetchall()
