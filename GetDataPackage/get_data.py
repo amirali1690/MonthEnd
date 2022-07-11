@@ -56,7 +56,9 @@ def get_current_billed(result):
     currentBilled = cursor.fetchall()
     for info in currentBilled:
         if info['clinic'] not in result :
-            result[info['clinic']]={'billed':{
+            result[info['clinic']]={
+                'month':lastMonth.strftime('%Y-%B'),
+                'billed':{
                 'total':{},'insurance':{},'pi':{}
                 },
                 'collection':{
@@ -89,7 +91,9 @@ def get_insurance_billed(result):
     insuranceBilled = cursor.fetchall()
     for info in insuranceBilled:
         if info['clinic'] not in result:
-            result[info['clinic']]={'billed':{
+            result[info['clinic']]={
+                'month':lastMonth.strftime('%Y-%B'),
+                'billed':{
                 'total':{},'insurance':{},'pi':{}
                 },
                 'collection':{
@@ -122,7 +126,9 @@ def get_pi_billed(result):
     piBilled = cursor.fetchall()
     for info in piBilled:
         if info['clinic'] not in result :
-            result[info['clinic']]={'billed':{
+            result[info['clinic']]={
+                'month':lastMonth.strftime('%Y-%B'),
+                'billed':{
                 'total':{},'insurance':{},'pi':{}
                 },
                 'collection':{
@@ -154,7 +160,9 @@ def get_insurance_collection(result):
     insuranceCollection = cursor.fetchall()
     for info in insuranceCollection:
         if info['clinic'] not in result :
-            result[info['clinic']]={'billed':{
+            result[info['clinic']]={
+                'month':lastMonth.strftime('%Y-%B'),
+                'billed':{
                 'total':{},'insurance':{},'pi':{}
                 },
                 'collection':{
@@ -183,7 +191,9 @@ def get_pi_collection(result):
     piCollection = cursor.fetchall()
     for info in piCollection:
         if info['clinic'] not in result :
-            result[info['clinic']]={'billed':{
+            result[info['clinic']]={
+                'month':lastMonth.strftime('%Y-%B'),
+                'billed':{
                 'total':{},'insurance':{},'pi':{}
                 },
                 'collection':{
@@ -213,7 +223,9 @@ def get_otc_collection(result):
     otcCollection = cursor.fetchall()
     for info in otcCollection:
         if info['clinic'] not in result :
-            result[info['clinic']]={'billed':{
+            result[info['clinic']]={
+                'month':lastMonth.strftime('%Y-%B'),
+                'billed':{
                 'total':{},'insurance':{},'pi':{}
                 },
                 'collection':{
@@ -245,7 +257,9 @@ def get_cp_collection(result):
     copayCollection = cursor.fetchall()
     for info in copayCollection:
         if info['clinic'] not in result :
-            result[info['clinic']]={'billed':{
+            result[info['clinic']]={
+                'month':lastMonth.strftime('%Y-%B'),
+                'billed':{
                 'total':{},'insurance':{},'pi':{}
                 },
                 'collection':{
@@ -273,7 +287,9 @@ def get_chiro_charges(result):
     chiroCharges = cursor.fetchall()
     for info in chiroCharges:
         if info['clinic'] not in result :
-            result[info['clinic']]={'billed':{
+            result[info['clinic']]={
+                'month':lastMonth.strftime('%Y-%B'),
+                'billed':{
                 'total':{},'insurance':{},'pi':{}
                 },
                 'collection':{
@@ -301,7 +317,9 @@ def get_pt_charges(result):
     ptCharges = cursor.fetchall()
     for info in ptCharges:
         if info['clinic'] not in result :
-            result[info['clinic']]={'billed':{
+            result[info['clinic']]={
+                'month':lastMonth.strftime('%Y-%B'),
+                'billed':{
                 'total':{},'insurance':{},'pi':{}
                 },
                 'collection':{
@@ -328,7 +346,9 @@ def get_md_charges(result):
     mdCharges = cursor.fetchall()
     for info in mdCharges:
         if info['clinic'] not in result :
-            result[info['clinic']]={'billed':{
+            result[info['clinic']]={
+                'month':lastMonth.strftime('%Y-%B'),
+                'billed':{
                 'total':{},'insurance':{},'pi':{}
                 },
                 'collection':{
@@ -341,7 +361,7 @@ def get_md_charges(result):
 
 def create_month_end():
     '''collect all stats required'''
-    result={'month':lastMonth.strftime('%Y-%B')}
+    result={}
     result=get_current_billed(result)
     result=get_insurance_billed(result)
     result=get_pi_billed(result)
