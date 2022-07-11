@@ -17,12 +17,14 @@ def create_pdf(data):
     pdf.cell(200,6,txt='Clinic: '+data['clinic'],ln=1,align='L')
     pdf.cell(200,6,txt='Month: '+data['month'].replace('-',' '),ln=1,align='L')
     pdf.cell(200,6,txt='Current Billed Amount: $'+data['billed']['total']['current'],ln=1,align='L')
-    pdf.cell(200,6,txt='Insurance: $'+data['billed']['insurance']['total']['current'],ln=1,align='L')
+    pdf.cell(200,6,txt='Insurance: $'+data['billed']['insurance']['total']['current'],
+            ln=1,align='L')
     pdf.cell(200,6,txt='PI: $'+data['billed']['PI']['total']['current'],ln=1,align='L')
 
     pdf.cell(200,30,txt='Previous Month Billed Amount: $'+data['billed']['total']['previous'],
             ln=1,align='L')
-    pdf.cell(200,6,txt='Insurance: $'+data['billed']['insurance']['total']['previous'],ln=1,align='L')
+    pdf.cell(200,6,txt='Insurance: $'+data['billed']['insurance']['total']['previous'],
+            ln=1,align='L')
     pdf.cell(200,6,txt='PI: $'+data['billed']['PI']['total']['previous'],ln=1,align='L')
     insuranceCollection= str(
                             round(
@@ -48,7 +50,8 @@ def create_pdf(data):
                     ' + ( '+data['billed']['collection']['copay/coins/ded']+') = $'+
                     insuranceCollection,ln=1,align='L')
     pdf.cell(200,6,txt='PI: $'+data['billed']['collection']['pi'],ln=1,align='L')
-    pdf.cell(200,6,txt='Copays/Coins/Ded: $'+data['billed']['collection']['copay/coins/ded'],ln=1,align='L')
+    pdf.cell(200,6,txt='Copays/Coins/Ded: $'+data['billed']['collection']['copay/coins/ded'],
+            ln=1,align='L')
     pdf.cell(200,6,txt='otc: $'+data['billed']['collection']['otc']+
                     ' - ( '+data['billed']['collection']['copay/coins/ded']+') = $'+
                     otcCollections,ln=1,align='L')
@@ -64,7 +67,8 @@ def create_pdf(data):
                                 )
     pdf.cell(200,30,txt='Percentage of Collections: %'+collectionPercentage,ln=1,align='L')
 
-    pdf.cell(200,30,txt='Chiropractic charges: $'+data['billed']['specialty']['chiro'],ln=1,align='L')
+    pdf.cell(200,30,txt='Chiropractic charges: $'+data['billed']['specialty']['chiro'],
+            ln=1,align='L')
     pdf.cell(200,6,txt='Medical charges: $'+data['billed']['specialty']['md'],ln=1,align='L')
     pdf.cell(200,6,txt='DPT charges: $'+data['billed']['specialty']['pt'],ln=1,align='L')
 
