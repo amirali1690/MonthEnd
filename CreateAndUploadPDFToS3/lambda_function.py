@@ -21,8 +21,7 @@ def lambda_handler(event, context):
     logger.info(event)
     print("Lambda function memory limits in MB:",context.memory_limit_in_mb)
 
-    s3_client= boto3.client('s3')
-    s3 = boto3.resource('s3')
+    s3Resource = boto3.resource('s3')
     client = boto3.client('sqs',region_name='us-west-2')
     responses = client.receive_message(
                     QueueUrl = 'https://sqs.us-west-2.amazonaws.com/849779278892/MonthEnd',
@@ -39,6 +38,7 @@ def lambda_handler(event, context):
             pdf.set_font("Arial",size=15)
             pdf.cell(200,10,txt=data['clinic'],ln=1,align='C')
             pdf.output('/tmp/'+data['clinic']+'.pdf')
-            s3.meta.client.upload_file('/tmp/'+data['clinic']+'.pdf','monthly-report-bfh',data['clinic']+'.pdf')
+            s3Resource.meta.client.upload_file('/tmp/'+data['clinic']+'.pdf',
+                            'monthly-report-bfh',data['clinic']+'.pdf')
         counter+=1
     return True
