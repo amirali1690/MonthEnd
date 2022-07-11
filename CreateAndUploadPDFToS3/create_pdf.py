@@ -17,15 +17,15 @@ def create_pdf(data):
     pdf.cell(200,6,txt='Clinic: '+data['clinic'],ln=1,align='L')
     pdf.cell(200,6,txt='Month: '+data['month'].replace('-',' '),ln=1,align='L')
     pdf.cell(200,6,txt='Current Billed Amount: $'+data['billed']['total']['current'],ln=1,align='L')
-    pdf.cell(200,6,txt='Insurance: $'+data['billed']['insurance']['total']['current'],
+    pdf.cell(200,6,txt='Insurance: $'+data['billed']['insurance']['current'],
             ln=1,align='L')
-    pdf.cell(200,6,txt='PI: $'+data['billed']['PI']['total']['current'],ln=1,align='L')
+    pdf.cell(200,6,txt='PI: $'+data['billed']['PI']['current'],ln=1,align='L')
 
     pdf.cell(200,30,txt='Previous Month Billed Amount: $'+data['billed']['total']['previous'],
             ln=1,align='L')
-    pdf.cell(200,6,txt='Insurance: $'+data['billed']['insurance']['total']['previous'],
+    pdf.cell(200,6,txt='Insurance: $'+data['billed']['insurance']['previous'],
             ln=1,align='L')
-    pdf.cell(200,6,txt='PI: $'+data['billed']['PI']['total']['previous'],ln=1,align='L')
+    pdf.cell(200,6,txt='PI: $'+data['billed']['PI']['previous'],ln=1,align='L')
     insuranceCollection= str(
                             round(
                                 float(data['billed']['collection']['insurance'])+
