@@ -36,5 +36,4 @@ def lambda_handler(event, context):
                             QueueUrl = queueInfo['QueueUrl'],
                             MessageBody=messageJson
                         )
-    print(result)
     return True
