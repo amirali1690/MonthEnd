@@ -121,7 +121,7 @@
                                 {
                                     "Effect" : "Allow",
                                     "Action" : [
-                                        "s3:Publish"
+                                        "sns:Publish"
                                     ],
                                     "Resource": [
                                         "arn:aws:sns:us-west-2:849779278892:new-provider" 
