@@ -2,11 +2,13 @@
 Functions to Create a pdf from a specific string
 '''
 from fpdf import FPDF
+import locale
 
 def create_pdf(data):
     '''
     get the data and create a pdf and store it in Lambda tmp directory
     '''
+    locale.setlocale( locale.LC_ALL, 'en_US' )
     pdf=FPDF()
     pdf.add_page()
     pdf.set_font("Arial",'B',size=15)
@@ -18,21 +20,21 @@ def create_pdf(data):
     pdf.cell(200,10,txt='Clinic: '+data['clinic'],ln=1,align='L')
     pdf.cell(200,10,txt='Month: '+data['month'].replace('-',' '),ln=1,align='L')
     pdf.cell(200,10,txt='Current Billed Amount: $'+
-            "{:,}".format(float(data['billed']['total']['current'])),ln=1,align='L')
-    pdf.cell(200,10,txt='Insurance: $'+"{:,}".format(float(data['billed']['insurance']['current'])),
+            locale.currency(data['billed']['total']['current'],grouping=True),ln=1,align='L')
+    pdf.cell(200,10,txt='Insurance: $'+locale.currency(data['billed']['insurance']['current'],grouping=True),
             ln=1,align='L')
     pdf.cell(200,10,txt='PI: $'+
-            "{:,}".format(float(data['billed']['pi']['current'])),ln=1,align='L')
+            locale.currency(data['billed']['pi']['current'],grouping=True),ln=1,align='L')
     pdf.cell(200,12,txt='',ln=1,align='L')
 
     pdf.cell(200,10,txt='Previous Month Billed Amount: $'+
-            "{:,}".format(float(data['billed']['total']['previous'])),
+            locale.currency(data['billed']['total']['previous'],grouping=True),
             ln=1,align='L')
     pdf.cell(200,10,txt='Insurance: $'+
-            "{:,}".format(float(data['billed']['insurance']['previous'])),
+            locale.currency(data['billed']['insurance']['previous'],grouping=True),
             ln=1,align='L')
     pdf.cell(200,10,txt='PI: $'+
-            "{:,}".format(float(data['billed']['pi']['previous'])),ln=1,align='L')
+            locale.currency(data['billed']['pi']['previous'],grouping=True),ln=1,align='L')
     insuranceCollection= str(
                             round(
                                 float(data['collection']['insurance'])+
@@ -55,19 +57,19 @@ def create_pdf(data):
                             )
 
     pdf.cell(200,10,txt='Insurance Collections: $'+
-                    "{:,}".format(float(data['collection']['insurance']))+
-                    ' + ('+"{:,}".format(float(data['collection']['copay/coins/ded']))+') = $'+
-                    "{:,}".format(float(insuranceCollection)),ln=1,align='L')
+                    locale.currency(data['collection']['insurance'],grouping=True)+
+                    ' + ('+locale.currency(data['collection']['copay/coins/ded'],grouping=True)+') = $'+
+                    locale.currency(insuranceCollection),ln=1,align='L')
     pdf.cell(200,10,txt='PI: $'+
-                        "{:,}".format(float(data['collection']['pi'])),ln=1,align='L')
+                        locale.currency(data['collection']['pi'],grouping=True),ln=1,align='L')
     pdf.cell(200,10,txt='Copays/Coins/Ded: $'+
-                    "{:,}".format(float(data['collection']['copay/coins/ded'])),
+                    locale.currency(data['collection']['copay/coins/ded'],grouping=True),
             ln=1,align='L')
     pdf.cell(200,10,txt='OTC Collecetions: $'+
-                    "{:,}".format(float(data['collection']['otc']))+
-                    ' - ('+"{:,}".format(float(data['collection']['copay/coins/ded']))+') = $'+
-                    "{:,}".format(float(otcCollections)),ln=1,align='L')
-    pdf.cell(200,10,txt='Total Collections: $'+"{:,}".format(float(totalCollection)),ln=1,align='L')
+                    locale.currency(data['collection']['otc'],grouping=True)+
+                    ' - ('+locale.currency(data['collection']['copay/coins/ded'],grouping=True)+') = $'+
+                    locale.currency(otcCollections),ln=1,align='L')
+    pdf.cell(200,10,txt='Total Collections: $'+locale.currency(totalCollection),ln=1,align='L')
 
 
     collectionPercentage = str(
@@ -79,18 +81,18 @@ def create_pdf(data):
                                 )
     pdf.cell(200,12,txt='',ln=1,align='L')
     pdf.cell(200,10,txt='Percentage of Collections: '+
-                "{:,}".format(float(collectionPercentage))+'%',ln=1,align='L')
+                locale.currency(collectionPercentage)+'%',ln=1,align='L')
     pdf.cell(200,12,txt='',ln=1,align='L')
     pdf.cell(200,10,txt='Chiropractic charges: $'+
-            "{:,}".format(float(data['specialty']['chiro'])),
+            locale.currency(data['specialty']['chiro'],grouping=True),
             ln=1,align='L')
     pdf.cell(200,10,txt='Medical charges: $'+
-                "{:,}".format(float(data['specialty']['md'])),ln=1,align='L')
+                locale.currency(data['specialty']['md'],grouping=True),ln=1,align='L')
     try:
         pdf.cell(200,10,txt='DPT charges: $'+
-            "{:,}".format(float(data['specialty']['pt'])),ln=1,align='L')
+            locale.currency(data['specialty']['pt'],grouping=True),ln=1,align='L')
     except ValueError:
         pdf.cell(200,10,txt='DPT charges: $'+
-            "{:,}".format(0),ln=1,align='L')
+            locale.currency(0,grouping=True),ln=1,align='L')
     pdf.output('/tmp/'+data['month']+'-'+data['clinic']+'.pdf')
     return True
