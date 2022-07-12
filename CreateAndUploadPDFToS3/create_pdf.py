@@ -88,7 +88,7 @@ def create_pdf(data):
                                 )
     pdf.cell(200,12,txt='',ln=1,align='L')
     pdf.cell(200,10,txt='Percentage of Collections: '+
-                float(collectionPercentage)+'%',ln=1,align='L')
+                collectionPercentage+'%',ln=1,align='L')
     pdf.cell(200,12,txt='',ln=1,align='L')
     pdf.cell(200,10,txt='Chiropractic charges: '+
             locale.currency(float(data['specialty']['chiro']),grouping=True),
