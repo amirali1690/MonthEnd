@@ -8,6 +8,20 @@ from fpdf import FPDF
 import boto3
 from botocore.exceptions import ClientError
 
+def send_to_sns(clinic,message):
+    """publish a message to SNS
+
+    :param clinic: string
+    :param message: string
+    :return: publish result
+    """
+    client = boto3.client('s3')
+    response = client.publish(
+    TopicArn='arn:aws:sns:us-west-2:849779278892:new-provider',
+    Message='Tracy it is a test '+message,
+    Subject=clinic,
+    )
+    return response
 
 def create_presigned_url(bucket_name, object_name, expiration=604800):
     """Generate a presigned URL to share an S3 object

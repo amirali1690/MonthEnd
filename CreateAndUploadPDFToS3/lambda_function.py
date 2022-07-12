@@ -5,7 +5,7 @@ import os
 import logging
 import ast
 import boto3
-from functions import create_pdf,create_presigned_url
+from functions import create_pdf,create_presigned_url,send_to_sns
 
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
@@ -44,5 +44,6 @@ def lambda_handler(event, context):
                 AttributeNames=['All'],
                 MaxNumberOfMessages = 10
                 )
-    print(urls)
+    for clinic,message in urls.items():
+        send_to_sns(clinic,message)
     return True
