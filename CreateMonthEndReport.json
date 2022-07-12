@@ -196,7 +196,7 @@
             "Type" : "AWS::Events::Rule",
             "Properties" : {
                 "Description" : "Scheduled Event to invoke PIgetCurrentToSQS lambda function",
-                "Name" : "MonthEndDataToSQS_invoke",
+                "Name" : "CreateMonthEndPDF_invoke",
                 "ScheduleExpression"  : "cron(0 3 7 * ? *)",
                 "State" : "ENABLED",
                 "Targets" : [{
