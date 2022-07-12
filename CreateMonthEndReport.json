@@ -178,6 +178,32 @@
                 "Handler" : "lambda_function.lambda_handler",
                 "Timeout" : 30
             }
+        },
+        "EBRuleGetMonthEndData":{
+            "Type" : "AWS::Events::Rule",
+            "Properties" : {
+                "Description" : "Scheduled Event to invoke PIgetCurrentToSQS lambda function",
+                "Name" : "MonthEndDataToSQS_invoke",
+                "ScheduleExpression"  : "cron(0 1 7 * ? *)",
+                "State" : "ENABLED",
+                "Targets" : [{
+                    "Arn" : {"Fn::GetAtt":["CreateMonthEndPdf","Arn"]},
+                    "Id" : "GetMonthEndData"
+                }]
+            }
+        },
+        "EBRuleCreateMonthEndPDF":{
+            "Type" : "AWS::Events::Rule",
+            "Properties" : {
+                "Description" : "Scheduled Event to invoke PIgetCurrentToSQS lambda function",
+                "Name" : "MonthEndDataToSQS_invoke",
+                "ScheduleExpression"  : "cron(0 3 7 * ? *)",
+                "State" : "ENABLED",
+                "Targets" : [{
+                    "Arn" : {"Fn::GetAtt":["GetMonthEndDataPublishshtoSQS","Arn"]},
+                    "Id" : "CreateMonthEndPDF"
+                }]
+            }
         }
     }   
 }
