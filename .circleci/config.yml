@@ -21,7 +21,7 @@ jobs:
                     pylint --variable-naming-style camelCase GetDataPackage/lambda_function.py
                     pylint --variable-naming-style camelCase GetDataPackage/get_data.py
                     pylint --variable-naming-style camelCase CreateAndUploadPDFToS3/lambda_function.py
-                    pylint --variable-naming-style camelCase CreateAndUploadPDFToS3/create_pdf.py
+                    pylint --variable-naming-style camelCase CreateAndUploadPDFToS3/functions.py  
 
             - run: 
                 name: lint cloudformation template
