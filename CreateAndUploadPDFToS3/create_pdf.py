@@ -1,8 +1,9 @@
 '''
 Functions to Create a pdf from a specific string
 '''
-from fpdf import FPDF
 import locale
+from fpdf import FPDF
+
 
 def create_pdf(data):
     '''
@@ -21,7 +22,8 @@ def create_pdf(data):
     pdf.cell(200,10,txt='Month: '+data['month'].replace('-',' '),ln=1,align='L')
     pdf.cell(200,10,txt='Current Billed Amount: $'+
             locale.currency(data['billed']['total']['current'],grouping=True),ln=1,align='L')
-    pdf.cell(200,10,txt='Insurance: $'+locale.currency(data['billed']['insurance']['current'],grouping=True),
+    pdf.cell(200,10,txt='Insurance: $'+
+            locale.currency(data['billed']['insurance']['current'],grouping=True),
             ln=1,align='L')
     pdf.cell(200,10,txt='PI: $'+
             locale.currency(data['billed']['pi']['current'],grouping=True),ln=1,align='L')
@@ -57,8 +59,10 @@ def create_pdf(data):
                             )
 
     pdf.cell(200,10,txt='Insurance Collections: $'+
-                    locale.currency(data['collection']['insurance'],grouping=True)+
-                    ' + ('+locale.currency(data['collection']['copay/coins/ded'],grouping=True)+') = $'+
+                    locale.currency(data['collection']['insurance']
+                    ,grouping=True)+
+                    ' + ('+locale.currency(data['collection']['copay/coins/ded']
+                    ,grouping=True)+') = $'+
                     locale.currency(insuranceCollection),ln=1,align='L')
     pdf.cell(200,10,txt='PI: $'+
                         locale.currency(data['collection']['pi'],grouping=True),ln=1,align='L')
@@ -67,7 +71,8 @@ def create_pdf(data):
             ln=1,align='L')
     pdf.cell(200,10,txt='OTC Collecetions: $'+
                     locale.currency(data['collection']['otc'],grouping=True)+
-                    ' - ('+locale.currency(data['collection']['copay/coins/ded'],grouping=True)+') = $'+
+                    ' - ('+locale.currency(data['collection']['copay/coins/ded'],
+                    grouping=True)+') = $'+
                     locale.currency(otcCollections),ln=1,align='L')
     pdf.cell(200,10,txt='Total Collections: $'+locale.currency(totalCollection),ln=1,align='L')
 
