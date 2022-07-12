@@ -5,7 +5,7 @@ import os
 import logging
 import ast
 import boto3
-from create_pdf import create_pdf
+from functions import create_pdf,create_presigned_url
 
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
@@ -29,16 +29,19 @@ def lambda_handler(event, context):
                     MaxNumberOfMessages = 10
                     )
     counter=0
+    urls={}
     while 'Messages' in responses.keys() and (len(responses['Messages']))>0 and counter<10:
         for message in responses['Messages']:
             data=ast.literal_eval(message['Body'])
             create_pdf(data)
             s3Resource.meta.client.upload_file('/tmp/'+data['month']+'-'+data['clinic']+'.pdf',
                             'monthly-report-bfh',data['month']+'/'+data['clinic']+'.pdf')
+            urls[data['clinic']]=create_presigned_url('monthly-report-bfh', data['month']+'/'+data['clinic']+'.pdf', expiration=604800)
         counter+=1
         responses = client.receive_message(
                 QueueUrl = 'https://sqs.us-west-2.amazonaws.com/849779278892/MonthEnd',
                 AttributeNames=['All'],
                 MaxNumberOfMessages = 10
                 )
+    print(urls)
     return True
