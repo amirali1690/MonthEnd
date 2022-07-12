@@ -15,7 +15,7 @@ def send_to_sns(clinic,message):
     :param message: string
     :return: publish result
     """
-    client = boto3.client('s3')
+    client = boto3.client('sns')
     response = client.publish(
     TopicArn='arn:aws:sns:us-west-2:849779278892:new-provider',
     Message='Tracy it is a test '+message,
