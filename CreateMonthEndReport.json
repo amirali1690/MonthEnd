@@ -112,6 +112,23 @@
                                 }
                             ]
                         }
+                    },
+                    {
+                        "PolicyName" : "lambdaSNS",
+                        "PolicyDocument" : {
+                            "Version"  : "2012-10-17",
+                            "Statement" : [
+                                {
+                                    "Effect" : "Allow",
+                                    "Action" : [
+                                        "s3:Publish"
+                                    ],
+                                    "Resource": [
+                                        "arn:aws:sns:us-west-2:849779278892:new-provider" 
+                                    ]
+                                }
+                            ]
+                        }
                     }
                 ],
                 "RoleName" : "MonthEndLambdaExecutionRole"
