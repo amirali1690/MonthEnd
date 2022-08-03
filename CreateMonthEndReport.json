@@ -184,7 +184,7 @@
             "Properties" : {
                 "Description" : "Scheduled Event to invoke PIgetCurrentToSQS lambda function",
                 "Name" : "MonthEndDataToSQS_invoke",
-                "ScheduleExpression"  : "cron(0 1 7 * ? *)",
+                "ScheduleExpression"  : "cron(0 1 4 * ? *)",
                 "State" : "ENABLED",
                 "Targets" : [{
                     "Arn" : {"Fn::GetAtt":["CreateMonthEndPdf","Arn"]},
