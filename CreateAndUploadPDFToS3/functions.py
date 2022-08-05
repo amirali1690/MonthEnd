@@ -94,15 +94,16 @@ def create_pdf(data):
                             )
     totalCollection = str(
                             round(
-                                float(data['collection']['insurance'])+
+                                float('0' if data['collection']['insurance']=='' else
+                                 data['collection']['insurance'])+
                                 float(data['collection']['pi'])+
                                 float(data['collection']['otc'])
                                 ,2)
                             )
 
     pdf.cell(200,10,txt='Insurance Collections: '+
-                    locale.currency(float(data['collection']['insurance']
-                    ),grouping=True)+
+                    locale.currency(float('0' if data['collection']['insurance']=='' else
+                                 data['collection']['insurance']),grouping=True)+
                     ' + ('+locale.currency(float(data['collection']['copay/coins/ded']
                     ),grouping=True)+') = '+
                     locale.currency(float(insuranceCollection),grouping=True),ln=1,align='L')
