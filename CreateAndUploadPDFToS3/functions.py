@@ -19,7 +19,7 @@ def send_to_sns(clinic,message):
     response = client.publish(
         TopicArn='arn:aws:sns:us-west-2:849779278892:new-provider',
         Message='Here is the link for the Month End report. The link will expire in 7 days.\n'+message,
-        Subject=clinic,
+        Subject=clinic +'Month End Report',
     )
     return response
 
