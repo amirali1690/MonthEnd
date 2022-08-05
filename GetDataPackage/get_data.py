@@ -21,7 +21,6 @@ def month_before(first_day):
     else:
         month=first_day.month-1
         result=datetime(first_day.year,month,1)
-
     return result.date()
 
 connection = pymysql.connect(host=os.getenv('RDS_HOST'),
@@ -32,7 +31,7 @@ connection = pymysql.connect(host=os.getenv('RDS_HOST'),
                             cursorclass= pymysql.cursors.DictCursor)
 cursor=connection.cursor()
 today=datetime.now().date()
-thisMonth=datetime(today.year,today.month-1,1).date()
+thisMonth=datetime(today.year,today.month,1).date()
 lastMonth = month_before(thisMonth)
 lastMonthMonth=lastMonth.month
 monthBeforeLastMonth = month_before(lastMonth)
