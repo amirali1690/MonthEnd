@@ -184,7 +184,7 @@
             "Properties" : {
                 "Description" : "Scheduled Event to invoke PIgetCurrentToSQS lambda function",
                 "Name" : "MonthEndDataToSQS_invoke",
-                "ScheduleExpression"  : "cron(0 1 4 * ? *)",
+                "ScheduleExpression"  : "cron(0 4 5 * ? *)",
                 "State" : "ENABLED",
                 "Targets" : [{
                     "Arn" : {"Fn::GetAtt":["CreateMonthEndPdf","Arn"]},
@@ -197,7 +197,7 @@
             "Properties" : {
                 "Description" : "Scheduled Event to invoke PIgetCurrentToSQS lambda function",
                 "Name" : "CreateMonthEndPDF_invoke",
-                "ScheduleExpression"  : "cron(0 3 7 * ? *)",
+                "ScheduleExpression"  : "cron(0 9 5 * ? *)",
                 "State" : "ENABLED",
                 "Targets" : [{
                     "Arn" : {"Fn::GetAtt":["GetMonthEndDataPublishshtoSQS","Arn"]},
