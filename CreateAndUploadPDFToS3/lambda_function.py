@@ -38,6 +38,10 @@ def lambda_handler(event, context):
                             'monthly-report-bfh',data['month']+'/'+data['clinic']+'.pdf')
             urls[data['clinic']]=create_presigned_url('monthly-report-bfh', data['month']+
                 '/'+data['clinic']+'.pdf', expiration=604800)
+            client.delete_message(
+                QueueUrl = 'https://sqs.us-west-2.amazonaws.com/849779278892/MonthEnd',
+                ReceiptHandle = message['ReceiptHandle']
+            )
         counter+=1
         responses = client.receive_message(
                 QueueUrl = 'https://sqs.us-west-2.amazonaws.com/849779278892/MonthEnd',
