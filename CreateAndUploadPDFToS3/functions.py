@@ -80,7 +80,8 @@ def create_pdf(data):
             locale.currency(float(data['billed']['pi']['previous']),grouping=True),ln=1,align='L')
     insuranceCollection= str(
                             round(
-                                float('0' if data['collection']['insurance']=='' else data['collection']['insurance'])+
+                                float('0' if data['collection']['insurance']=='' else
+                                 data['collection']['insurance'])+
                                 float(data['collection']['copay/coins/ded'])
                                 ,2)
                             )
