@@ -17,9 +17,9 @@ def send_to_sns(clinic,message):
     """
     client = boto3.client('sns')
     response = client.publish(
-    TopicArn='arn:aws:sns:us-west-2:849779278892:new-provider',
-    Message='Tracy it is a test '+message,
-    Subject=clinic,
+        TopicArn='arn:aws:sns:us-west-2:849779278892:new-provider',
+        Message='Here is the link for the Month End report. The link will expire in 7 days.\n'+message,
+        Subject=clinic,
     )
     return response
 
