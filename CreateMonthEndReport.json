@@ -204,7 +204,7 @@
         "EventSourceMappingLambda": {
             "Type" : "AWS::Lambda::EventSourceMapping",
             "Properties" : {
-                "EventSourceArn":{"Ref":"MonthEnd"},
+                "EventSourceArn":{"Fn::GetAtt":["MonthEnd","Arn"]},
                 "FunctionName": {"Ref": "CreateMonthEndPdf"}
             }
         }
