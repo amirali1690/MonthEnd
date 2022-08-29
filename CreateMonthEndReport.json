@@ -37,7 +37,8 @@
         "MonthEnd": {
             "Type" : "AWS::SQS::Queue",
             "Properties"  : {
-                "QueueName"  : "MonthEnd"
+                "QueueName"  : "MonthEnd",
+                "VisibilityTimeout":5
             }
         },
         "MonthEndLambdaExecutionRole":{
