@@ -90,6 +90,8 @@ jobs:
                 command: |
                     S3KEYTOSQSENV=LambdaPackageGetData-${CIRCLE_WORKFLOW_ID}.zip
                     S3KEYMONTHENDPDFENV=LambdaPackageCreatePDF-${CIRCLE_WORKFLOW_ID}.zip
+                    SNSTOPICARN=aws sns list-topics --query \
+                    'Topics[?contains(TopicArn,`new-provider`)].TopicArn | [0]'
                     aws cloudformation deploy --template-file CreateMonthEndReport.json \
                      --stack-name CreateMonthEnd --capabilities CAPABILITY_NAMED_IAM \
                      --parameter-overrides RDSHOST=${RDS_HOST} RDSDB=${RDS_DB} \

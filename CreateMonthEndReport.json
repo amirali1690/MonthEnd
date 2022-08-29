@@ -26,6 +26,10 @@
         "S3KEYMONTHENDPDF" : {
             "Type" : "String",
             "Description" : "zip file key name for MonthEndReport Lambda function"
+        },
+        "SNSTOPICARN" : {
+            "Type" : "String",
+            "Description" :  "TopicArn for new-provider topic"
         }
         
     },
@@ -124,7 +128,7 @@
                                         "sns:Publish"
                                     ],
                                     "Resource": [
-                                        "arn:aws:sns:us-west-2:849779278892:new-provider" 
+                                        {"Ref" :"SNSTOPICARN"}
                                     ]
                                 }
                             ]
