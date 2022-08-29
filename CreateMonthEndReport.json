@@ -184,8 +184,7 @@
                 "PackageType" : "Zip",
                 "Role" : {"Fn::GetAtt":["MonthEndLambdaExecutionRole","Arn"]},
                 "Runtime" : "python3.8",
-                "Handler" : "lambda_function.lambda_handler",
-                "Timeout" : 30
+                "Handler" : "lambda_function.lambda_handler"
             }
         },
         "EBRuleGetMonthEndData":{
