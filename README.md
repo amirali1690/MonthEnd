@@ -1,3 +1,6 @@
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/amirali1690/MonthEnd/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/amirali1690/MonthEnd/tree/master)
+
+
 # MonthEnd  
 This project include following parts:  
 1- A Lambda function that with Python that run every month and collect data from an AWS RDS MySQL database and upload it to a SQS queue  
