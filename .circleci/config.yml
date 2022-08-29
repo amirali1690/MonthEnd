@@ -90,13 +90,14 @@ jobs:
                 command: |
                     S3KEYTOSQSENV=LambdaPackageGetData-${CIRCLE_WORKFLOW_ID}.zip
                     S3KEYMONTHENDPDFENV=LambdaPackageCreatePDF-${CIRCLE_WORKFLOW_ID}.zip
-                    SNSTOPICARN=`aws sns list-topics --query \
+                    SNSTOPICARNENV=`aws sns list-topics --query \
                     "Topics[?contains(TopicArn,'new-provider')].TopicArn | [0]" --output text`
                     aws cloudformation deploy --template-file CreateMonthEndReport.json \
                      --stack-name CreateMonthEnd --capabilities CAPABILITY_NAMED_IAM \
                      --parameter-overrides RDSHOST=${RDS_HOST} RDSDB=${RDS_DB} \
                      RDSUSER=${RDS_USER} RDSPASSWORD=${RDS_PASSWORD} \
-                     S3KEYMONTHEND=$S3KEYTOSQSENV S3KEYMONTHENDPDF=$S3KEYMONTHENDPDFENV
+                     S3KEYMONTHEND=$S3KEYTOSQSENV S3KEYMONTHENDPDF=$S3KEYMONTHENDPDFENV \
+                     SNSTOPICARN=$SNSTOPICARNENV
 workflows: 
     launchPiCaseBalanceUpdate: 
         jobs: 
