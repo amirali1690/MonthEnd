@@ -201,17 +201,11 @@
                 }]
             }
         },
-        "EBRuleCreateMonthEndPDF":{
-            "Type" : "AWS::Events::Rule",
+        "EventSourceMappingLambda": {
+            "Type" : "AWS::Lambda::EventSourceMapping",
             "Properties" : {
-                "Description" : "Scheduled Event to invoke PIgetCurrentToSQS lambda function",
-                "Name" : "CreateMonthEndPDF_invoke",
-                "ScheduleExpression"  : "cron(0 4 5 * ? *)",
-                "State" : "ENABLED",
-                "Targets" : [{
-                    "Arn" : {"Fn::GetAtt":["GetMonthEndDataPublishshtoSQS","Arn"]},
-                    "Id" : "CreateMonthEndPDF"
-                }]
+                "EventSourceArn":{"Ref":"MonthEnd"},
+                "FunctionName": {"Ref": "CreateMonthEndPdf"}
             }
         }
     }   
