@@ -171,6 +171,11 @@
                     "S3Bucket" : "generalfilesbackfit",
                     "S3Key" : {"Ref" :"S3KEYMONTHENDPDF"}
                 },
+                "Environment" : {
+                    "Variables" : {
+                        "SNSTOPICARN":{"Ref":"SNSTOPICARN"}
+                    }
+                },
                 "FunctionName" : "CreateMonthEndPDFSendToS3",
                 "Layers" : [
                             "arn:aws:lambda:us-west-2:849779278892:layer:pymysql:2",
